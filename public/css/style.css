@@ -1,0 +1,95 @@
+/* GLOBAL */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0d0f1a;
+  color: #e6e6e6;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+#app {
+  width: 90%;
+  max-width: 600px;
+  margin-top: 40px;
+  padding: 20px;
+  background: #141627;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+  animation: fadeIn 0.4s ease;
+}
+
+/* HEADERS */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00eaff;
+  text-shadow: 0 0 8px #00eaff;
+}
+
+/* BUTTONS */
+button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+  background: #00eaff;
+  color: #0d0f1a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #00bcd4;
+  box-shadow: 0 0 10px #00eaff;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #00eaff;
+  background: #0d0f1a;
+  color: #e6e6e6;
+}
+
+/* CHAT + BATTLE LOG */
+#messages div,
+#battle-log div {
+  background: #1c1f33;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border-left: 3px solid #00eaff;
+  animation: fadeIn 0.2s ease;
+}
+
+/* TYPING */
+#typing {
+  font-style: italic;
+  color: #00eaff;
+  margin-top: 6px;
+}
+
+/* SCORE */
+#score-area {
+  margin: 10px 0;
+  padding: 10px;
+  background: #1c1f33;
+  border-radius: 6px;
+  text-align: center;
+  border: 1px solid #00eaff;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

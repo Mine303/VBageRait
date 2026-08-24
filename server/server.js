@@ -1,33 +1,30 @@
-// Safe, playful LLM-style scoring
-function scoreMessage(msg) {
-  let score = 0;
+async function llmScoreMessage(msg) {
+  const response = await fetch("https://safe-llm-api.example.com/score", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer YOUR_API_KEY"
+    },
+    body: JSON.stringify({
+      prompt: `
+You are a friendly scoring assistant for a teen game.
+Score the following message from 0 to 10 based on:
+- creativity
+- humor
+- dramatic flair
+- exaggeration
+- playful energy
 
-  // Creativity: longer messages often have more flair
-  if (msg.length > 20) score += 1;
-  if (msg.length > 40) score += 1;
+Message: "${msg}"
 
-  // Dramatic punctuation
-  if (/[!?]/.test(msg)) score += 1;
-
-  // Funny / dramatic keywords
-  const funnyWords = ["bro", "wow", "no way", "fr", "nah", "dude"];
-  const dramaticWords = ["unbelievable", "insane", "wild", "shocking"];
-
-  const lower = msg.toLowerCase();
-
-  funnyWords.forEach(w => {
-    if (lower.includes(w)) score += 1;
+Respond ONLY with a number from 0 to 10.
+`
+    })
   });
 
-  dramaticWords.forEach(w => {
-    if (lower.includes(w)) score += 1;
-  });
+  const data = await response.json();
+  const score = parseInt(data.score);
 
-  // Energy boost: CAPS
-  if (msg === msg.toUpperCase() && msg.length > 5) {
-    score += 1;
-  }
-
-  // Keep score safe and small
-  return Math.min(score, 10);
+  if (isNaN(score)) return 0;
+  return Math.max(0, Math.min(score, 10));
 }

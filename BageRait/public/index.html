@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text Chess</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <h1>Text Chess</h1>
+
+  <div id="room-select">
+    <input id="roomInput" placeholder="Room name">
+    <button id="joinBtn">Join Room</button>
+  </div>
+
+  <div id="chat" style="display:none;">
+    <div id="messages"></div>
+    <input id="msgInput" placeholder="Type a message...">
+    <button id="sendBtn">Send</button>
+    <div id="typing"></div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="js/client.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+body {
+  font-family: Arial;
+  background: #f0f0f0;
+  padding: 20px;
+}
+
+#messages div {
+  background: white;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 4px;
+}

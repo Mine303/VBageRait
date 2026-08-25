@@ -47,17 +47,20 @@ button:hover {
   box-shadow: 0 0 15px #00eaff;
 }
 
-/* INPUTS */
+/* INPUT FIX — perfectly centered */
 input {
   width: 100%;
   padding: 14px;
-  margin: 12px 0;
+  margin: 0 auto 20px auto;   /* centers + adds spacing */
+  display: block;             /* ensures centering works */
   border-radius: 10px;
   border: 2px solid #00eaff;
   background: #000;
   color: #e6e6e6;
   font-size: 18px;
+  box-sizing: border-box;
 }
+
 
 /* SUBTEXT */
 p {
@@ -73,4 +76,26 @@ button {
   0% { box-shadow: 0 0 10px #00eaff; }
   50% { box-shadow: 0 0 20px #00eaff; }
   100% { box-shadow: 0 0 10px #00eaff; }
+}
+#app > div {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+h2 {
+  animation: titleGlow 3s infinite;
+}
+
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 10px #00eaff; }
+  50% { text-shadow: 0 0 20px #00eaff; }
+  100% { text-shadow: 0 0 10px #00eaff; }
+}
+input:focus {
+  outline: none;
+  box-shadow: 0 0 15px #00eaff;
+  border-color: #00eaff;
 }

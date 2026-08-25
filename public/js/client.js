@@ -13,16 +13,27 @@ document.addEventListener("click", (e) => {
 
   // MAIN MENU
   if (e.target.id === "singleplayerBtn") {
-    loadComponent("game");
-    document.getElementById("battle-log").innerHTML =
-      "<p>Singleplayer mode coming soon!</p>";
+    loadComponent("singleplayer");
   }
 
   if (e.target.id === "multiplayerBtn") {
+    loadComponent("multiplayer-menu");
+  }
+
+  // MULTIPLAYER MENU
+  if (e.target.id === "privateRoomBtn") {
     loadComponent("room-select");
   }
 
-  // ROOM SELECT
+  if (e.target.id === "publicRoomBtn") {
+    loadComponent("public-room");
+  }
+
+  if (e.target.id === "backToMenu") {
+    loadComponent("main-menu");
+  }
+
+  // PRIVATE ROOM JOIN
   if (e.target.id === "joinBtn") {
     const room = document.getElementById("roomInput").value.trim();
     if (!room) return;
@@ -34,17 +45,24 @@ document.addEventListener("click", (e) => {
 
     loadComponent("chat");
 
-    socket.on("systemMessage", (msg) => addMessage("SYSTEM", msg));
-    socket.on("chatMessage", (data) => addMessage(data.id, data.message));
-    socket.on("typing", (id) => showTyping(id));
-    socket.on("battleMessage", (data) => addBattle(data.id, data.message));
-    socket.on("battleScore", (score) => {
-      document.getElementById("scoreDisplay").innerText = `Score: ${score}`;
-    });
+    setupSocketListeners();
   }
 
-  if (e.target.id === "backToMenu") {
-    loadComponent("main-menu");
+  // PUBLIC ROOM JOIN
+  if (e.target.id === "joinPublicBtn") {
+    const room = "public-" + Math.floor(Math.random() * 99999);
+    currentRoom = room;
+
+    socket = io("https://vbagerait.onrender.com");
+    socket.emit("joinRoom", room);
+
+    loadComponent("chat");
+
+    setupSocketListeners();
+  }
+
+  if (e.target.id === "backToMultiplayer") {
+    loadComponent("multiplayer-menu");
   }
 
   // CHAT
@@ -88,6 +106,17 @@ document.addEventListener("input", (e) => {
     socket.emit("typing", currentRoom);
   }
 });
+
+// SOCKET LISTENERS (same as old client.js)
+function setupSocketListeners() {
+  socket.on("systemMessage", (msg) => addMessage("SYSTEM", msg));
+  socket.on("chatMessage", (data) => addMessage(data.id, data.message));
+  socket.on("typing", (id) => showTyping(id));
+  socket.on("battleMessage", (data) => addBattle(data.id, data.message));
+  socket.on("battleScore", (score) => {
+    document.getElementById("scoreDisplay").innerText = `Score: ${score}`;
+  });
+}
 
 function addMessage(id, msg) {
   const box = document.getElementById("messages");

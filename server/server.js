@@ -11,18 +11,42 @@ const io = new Server(server, {
   }
 });
 
-// Simple safe scoring
-function scoreMessage(msg) {
-  let score = 0;
+async function scoreMessage(msg) {
+  const response = await fetch(
+    "https://api-inference.huggingface.co/models/google/flan-t5-small",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.HF_API_KEY}`
+      },
+      body: JSON.stringify({
+        inputs: `
+You are a friendly AI judge for a teen-safe game.
+Score the message from 0 to 10 based on:
+- creativity
+- humor
+- dramatic flair
+- exaggeration
+- playful energy
 
-  if (msg.length > 20) score += 1;
-  if (/[!?]/.test(msg)) score += 1;
-  if (msg.toLowerCase().includes("wow")) score += 1;
-  if (msg.toLowerCase().includes("bro")) score += 1;
-  if (msg.toLowerCase().includes("no way")) score += 1;
+Message: "${msg}"
 
-  return score;
+Respond ONLY with a number from 0 to 10.
+`
+      })
+    }
+  );
+
+  const data = await response.json();
+  const text = data?.[0]?.generated_text || "0";
+  const score = parseInt(text);
+
+  if (isNaN(score)) return 0;
+  return Math.max(0, Math.min(score, 10));
 }
+
+
 
 io.on("connection", (socket) => {
   console.log("Player connected:", socket.id);

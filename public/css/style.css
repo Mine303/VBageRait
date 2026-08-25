@@ -65,3 +65,12 @@ p {
   margin-bottom: 20px;
   font-size: 18px;
 }
+button {
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px #00eaff; }
+  50% { box-shadow: 0 0 20px #00eaff; }
+  100% { box-shadow: 0 0 10px #00eaff; }
+}
